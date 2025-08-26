@@ -327,20 +327,62 @@
         data: $(this).serialize(),
         dataType: 'json',
         success: function(response) {
+          console.log('Response received:', response); // Debug log
           if (response.success) {
-            // Show success message
-            $('.w-form-done').show();
+            // Hide the form
+            $('#contactform').hide();
+            
+            // Show success message with better visibility
+            $('.w-form-done').show().css({
+              'display': 'block',
+              'opacity': '1',
+              'visibility': 'visible',
+              'background': '#f8f9fa',
+              'padding': '30px',
+              'border-radius': '10px',
+              'text-align': 'center',
+              'margin': '20px 0'
+            });
+            
+            // Update success message text
+            $('.w-form-done .text-block-64').text(response.message);
+            
+            // Scroll to success message
+            $('html, body').animate({
+              scrollTop: $('.w-form-done').offset().top - 100
+            }, 500);
+            
+            // Reset form
             $('#contactform')[0].reset();
           } else {
             // Show error message
             $('.w-form-fail div').text(response.message || 'Something went wrong. Please try again.');
-            $('.w-form-fail').show();
+            $('.w-form-fail').show().css({
+              'display': 'block',
+              'opacity': '1',
+              'visibility': 'visible',
+              'background': '#f8d7da',
+              'color': '#721c24',
+              'padding': '15px',
+              'border-radius': '5px',
+              'margin': '10px 0'
+            });
           }
         },
         error: function(xhr, status, error) {
+          console.log('Error:', xhr.responseText); // Debug log
           // Show error message
           $('.w-form-fail div').text('Something went wrong. Please try again or contact us directly.');
-          $('.w-form-fail').show();
+          $('.w-form-fail').show().css({
+            'display': 'block',
+            'opacity': '1',
+            'visibility': 'visible',
+            'background': '#f8d7da',
+            'color': '#721c24',
+            'padding': '15px',
+            'border-radius': '5px',
+            'margin': '10px 0'
+          });
         },
         complete: function() {
           // Reset button state

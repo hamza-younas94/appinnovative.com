@@ -53,7 +53,7 @@ if (!empty($errors)) {
 
 // Prepare email content
 $to = 'info@appinnovative.com';
-$subject = 'New Contact Form Submission - AppInnovative';
+$subject = 'New Project Inquiry: ' . $projectType . ' - ' . $fullName;
 
 $emailBody = "
 New contact form submission received from AppInnovative website.
@@ -86,9 +86,12 @@ $headers = [
 // Send email
 $mailSent = mail($to, $subject, $emailBody, implode("\r\n", $headers));
 
+// Log for debugging
+error_log("Contact form submission - To: $to, Subject: $subject, Mail sent: " . ($mailSent ? 'Yes' : 'No'));
+
 if ($mailSent) {
     // Send confirmation email to user
-    $userSubject = 'Thank you for contacting AppInnovative';
+    $userSubject = 'Thank you for your ' . $projectType . ' inquiry - AppInnovative';
     $userBody = "
 Dear {$fullName},
 
